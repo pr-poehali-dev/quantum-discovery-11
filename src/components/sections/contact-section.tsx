@@ -1,32 +1,29 @@
-import { Mail, MapPin } from "lucide-react"
+import { Phone, MapPin } from "lucide-react"
 import { useReveal } from "@/hooks/use-reveal"
 import { useState, type FormEvent } from "react"
 import { MagneticButton } from "@/components/magnetic-button"
 
 export function ContactSection() {
   const { ref, isVisible } = useReveal(0.3)
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" })
+  const [formData, setFormData] = useState({ name: "", phone: "", message: "" })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    // Basic validation
-    if (!formData.name || !formData.email || !formData.message) {
+    if (!formData.name || !formData.phone) {
       return
     }
 
     setIsSubmitting(true)
 
-    // Simulate form submission (replace with actual API call later)
     await new Promise((resolve) => setTimeout(resolve, 1500))
 
     setIsSubmitting(false)
     setSubmitSuccess(true)
-    setFormData({ name: "", email: "", message: "" })
+    setFormData({ name: "", phone: "", message: "" })
 
-    // Reset success message after 5 seconds
     setTimeout(() => setSubmitSuccess(false), 5000)
   }
 
@@ -44,27 +41,27 @@ export function ContactSection() {
               }`}
             >
               <h2 className="mb-2 font-sans text-4xl font-light leading-[1.05] tracking-tight text-foreground md:mb-3 md:text-7xl lg:text-8xl">
-                Давайте
+                Позвоните
                 <br />
-                поговорим
+                нам
               </h2>
-              <p className="font-mono text-xs text-foreground/60 md:text-base">/ Свяжитесь с нами</p>
+              <p className="font-mono text-xs text-foreground/60 md:text-base">/ Свяжитесь прямо сейчас</p>
             </div>
 
             <div className="space-y-4 md:space-y-8">
               <a
-                href="mailto:info@flowrise.dev"
+                href="tel:+78002001234"
                 className={`group block transition-all duration-700 ${
                   isVisible ? "translate-x-0 opacity-100" : "-translate-x-16 opacity-0"
                 }`}
                 style={{ transitionDelay: "200ms" }}
               >
                 <div className="mb-1 flex items-center gap-2">
-                  <Mail className="h-3 w-3 text-foreground/60" />
-                  <span className="font-mono text-xs text-foreground/60">Email</span>
+                  <Phone className="h-3 w-3 text-foreground/60" />
+                  <span className="font-mono text-xs text-foreground/60">Телефон</span>
                 </div>
                 <p className="text-base text-foreground transition-colors group-hover:text-foreground/70 md:text-2xl">
-                  info@flowrise.dev
+                  +7 (966) 992-70-64
                 </p>
               </a>
 
@@ -76,31 +73,37 @@ export function ContactSection() {
               >
                 <div className="mb-1 flex items-center gap-2">
                   <MapPin className="h-3 w-3 text-foreground/60" />
-                  <span className="font-mono text-xs text-foreground/60">Локация</span>
+                  <span className="font-mono text-xs text-foreground/60">Режим работы</span>
                 </div>
-                <p className="text-base text-foreground md:text-2xl">Москва, Россия</p>
+                <p className="text-base text-foreground md:text-2xl">Ежедневно, 9:00 — 21:00</p>
               </div>
 
               <div
-                className={`flex gap-2 pt-2 transition-all duration-700 md:pt-4 ${
+                className={`flex gap-4 pt-2 transition-all duration-700 md:pt-4 ${
                   isVisible ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
                 }`}
                 style={{ transitionDelay: "500ms" }}
               >
-                {["Telegram", "VK", "LinkedIn", "GitHub"].map((social) => (
-                  <a
-                    key={social}
-                    href="#"
-                    className="border-b border-transparent font-mono text-xs text-foreground/60 transition-all hover:border-foreground/60 hover:text-foreground/90"
-                  >
-                    {social}
-                  </a>
-                ))}
+                <a
+                  href="https://wa.me/79669927064"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border-b border-transparent font-mono text-xs text-foreground/60 transition-all hover:border-foreground/60 hover:text-foreground/90"
+                >
+                  WhatsApp
+                </a>
+                <a
+                  href="https://t.me/+79669927064"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border-b border-transparent font-mono text-xs text-foreground/60 transition-all hover:border-foreground/60 hover:text-foreground/90"
+                >
+                  Telegram
+                </a>
               </div>
             </div>
           </div>
 
-          {/* Right side - Minimal form */}
           <div className="flex flex-col justify-center">
             <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
               <div
@@ -126,14 +129,14 @@ export function ContactSection() {
                 }`}
                 style={{ transitionDelay: "350ms" }}
               >
-                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">Email</label>
+                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">Телефон</label>
                 <input
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   required
                   className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
-                  placeholder="your@email.com"
+                  placeholder="+7 (___) ___-__-__"
                 />
               </div>
 
@@ -143,14 +146,13 @@ export function ContactSection() {
                 }`}
                 style={{ transitionDelay: "500ms" }}
               >
-                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">Сообщение</label>
+                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">Оператор и ситуация</label>
                 <textarea
                   rows={3}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  required
                   className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
-                  placeholder="Расскажите о вашем проекте..."
+                  placeholder="Например: МТС, потерял телефон, нужно восстановить номер..."
                 />
               </div>
 
@@ -165,10 +167,10 @@ export function ContactSection() {
                   size="lg"
                   className="w-full disabled:opacity-50"
                 >
-                  {isSubmitting ? "Отправка..." : "Отправить"}
+                  {isSubmitting ? "Отправка..." : "Оставить заявку"}
                 </MagneticButton>
                 {submitSuccess && (
-                  <p className="mt-3 text-center font-mono text-sm text-foreground/80">Сообщение отправлено!</p>
+                  <p className="mt-3 text-center font-mono text-sm text-foreground/80">Заявка принята! Перезвоним в течение 15 минут.</p>
                 )}
               </div>
             </form>
